@@ -81,7 +81,7 @@ PS2-Games/
 
 ## Como executar o projeto
 
-1 - git clone https://github.com/seu-usuario/ps2-games.git
+1 - git clone https://github.com/caspoti/PS2-Games-Library-Aplica-o-Web.git
 
 2 - cd ps2-games
 
