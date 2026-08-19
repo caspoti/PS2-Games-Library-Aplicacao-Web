@@ -1,0 +1,464 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+    .game-detail-page {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 50px 20px;
+    }
+
+    .game-trailer {
+    margin-top: 10px;
+}
+
+/* =========================
+       TRAILER GAME
+    ========================= */
+
+.game-trailer h2 {
+    margin-bottom: 15px;
+
+    color: #0066cc;
+
+    font-size: 20px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+
+.youtube-container {
+    position: relative;
+
+    width: 100%;
+
+    max-width: 600px;
+
+    aspect-ratio: 16 / 9;
+
+    overflow: hidden;
+
+    border: 1px solid #333;
+
+    border-radius: 6px;
+
+    background-color: #050505;
+
+    box-shadow:
+        0 0 15px rgba(0, 102, 204, 0.2);
+}
+
+
+.youtube-container iframe {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    top: 0;
+    left: 0;
+
+    border: 0;
+}
+
+    /* =========================
+       BACK BUTTON
+    ========================= */
+
+    .back-button {
+        display: inline-block;
+
+        margin-bottom: 30px;
+
+        padding: 10px 18px;
+
+        background-color: #151515;
+
+        border: 1px solid #333;
+
+        border-radius: 5px;
+
+        color: #aaa;
+
+        text-decoration: none;
+
+        font-size: 14px;
+
+        transition: all 0.2s ease;
+    }
+
+
+    .back-button:hover {
+        color: #fff;
+
+        background-color: #0066cc;
+
+        border-color: #0066cc;
+    }
+
+
+    /* =========================
+       GAME HEADER
+    ========================= */
+
+    .game-detail {
+        display: grid;
+
+        grid-template-columns: 350px 1fr;
+
+        gap: 50px;
+
+        align-items: start;
+
+        background-color: #111;
+
+        border: 1px solid #292929;
+
+        border-radius: 8px;
+
+        padding: 35px;
+
+        box-shadow:
+            0 10px 35px rgba(0, 0, 0, 0.5);
+    }
+
+
+    /* =========================
+       GAME IMAGE
+    ========================= */
+
+    .game-image-container {
+        width: 100%;
+
+        display: flex;
+
+        justify-content: center;
+    }
+
+
+    .game-image-container img {
+        width: 100%;
+
+        max-width: 350px;
+
+        aspect-ratio: 2 / 3;
+
+        object-fit: contain;
+
+        display: block;
+
+        background-color: #050505;
+
+        border: 2px solid #0066cc;
+
+        border-radius: 5px;
+
+        box-shadow:
+            0 0 20px rgba(0, 102, 204, 0.25);
+    }
+
+
+    /* =========================
+       GAME INFORMATION
+    ========================= */
+
+    .game-info {
+        padding-top: 5px;
+    }
+
+
+    .game-info h1 {
+        margin-bottom: 20px;
+
+        color: #ffffff;
+
+        font-size: 42px;
+
+        line-height: 1.1;
+
+        text-transform: uppercase;
+
+        letter-spacing: 2px;
+
+        text-shadow:
+            0 0 10px rgba(0, 102, 204, 0.5);
+    }
+
+
+    .game-info p {
+        color: #aaa;
+
+        font-size: 16px;
+
+        line-height: 1.7;
+
+        margin-bottom: 15px;
+    }
+
+
+    .game-info strong {
+        color: #ffffff;
+    }
+
+
+    /* =========================
+       RATING
+    ========================= */
+
+    .game-rating {
+        display: inline-block;
+
+        margin: 10px 0 20px;
+
+        padding: 10px 16px;
+
+        background-color: #080808;
+
+        border: 1px solid #333;
+
+        border-radius: 5px;
+
+        color: #ffd700;
+
+        font-size: 18px;
+
+        font-weight: bold;
+    }
+
+
+    /* =========================
+       FAVORITE
+    ========================= */
+
+    .game-favorite {
+        display: inline-block;
+
+        margin-bottom: 20px;
+
+        padding: 8px 14px;
+
+        background-color: #1b0b10;
+
+        border: 1px solid #ff4d6d;
+
+        border-radius: 5px;
+
+        color: #ff4d6d;
+
+        font-weight: bold;
+    }
+
+
+    /* =========================
+       REVIEW
+    ========================= */
+
+    .game-review {
+        grid-column: 1 / -1;
+
+        margin-top: 10px;
+
+        padding-top: 30px;
+
+        border-top: 1px solid #292929;
+    }
+
+
+    .game-review h2 {
+        margin-bottom: 15px;
+
+        color: #0066cc;
+
+        font-size: 22px;
+
+        text-transform: uppercase;
+
+        letter-spacing: 1px;
+    }
+
+
+    .game-review p {
+        color: #aaa;
+
+        font-size: 16px;
+
+        line-height: 1.8;
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 800px) {
+
+        .game-detail {
+            grid-template-columns: 1fr;
+
+            gap: 30px;
+
+            padding: 25px;
+        }
+
+
+        .game-image-container img {
+            max-width: 300px;
+        }
+
+
+        .game-info h1 {
+            font-size: 32px;
+
+            text-align: center;
+        }
+
+
+        .game-rating,
+        .game-favorite {
+            display: block;
+
+            width: fit-content;
+
+            margin-left: auto;
+
+            margin-right: auto;
+        }
+
+    }
+
+
+    @media (max-width: 500px) {
+
+        .game-detail-page {
+            padding: 30px 15px;
+        }
+
+
+        .game-detail {
+            padding: 20px;
+        }
+
+
+        .game-info h1 {
+            font-size: 27px;
+        }
+
+
+        .game-image-container img {
+            max-width: 240px;
+        }
+
+    }
+
+</style>
+
+
+<div class="game-detail-page">
+
+
+    <a
+        href="{% url 'games_list' %}"
+        class="back-button"
+    >
+        ← Voltar para jogos
+    </a>
+
+
+    <div class="game-detail">
+
+
+        <!-- CAPA DO JOGO -->
+
+        <div class="game-image-container">
+
+            <img
+                src="{{ game.image.url }}"
+                alt="Capa do jogo {{ game.title }}"
+            >
+
+        </div>
+
+
+        <!-- INFORMAÇÕES DO JOGO -->
+
+        <div class="game-info">
+
+            <h1>
+                {{ game.title }}
+            </h1>
+
+
+            <p>
+                <strong>
+                    Ano de lançamento:
+                </strong>
+
+                {{ game.release_year }}
+            </p>
+
+
+            <div class="game-rating">
+
+                ⭐
+                {{ game.rating }}/5
+
+            </div>
+
+
+            {% if game.favorite %}
+
+                <div class="game-favorite">
+                    ❤️ Jogo favorito
+                </div>
+
+            {% endif %}
+
+            <div class="game-trailer">
+
+                <h2>
+                    🎬 Trailer
+                </h2>
+
+                <div class="youtube-container">
+
+                    <iframe
+                        src="https://www.youtube.com/embed/{{ game.trailer_link }}"
+                        title="Trailer de {{ game.title }}"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- REVIEW -->
+
+        <div class="game-review">
+
+            <h2>
+                Meu Review
+            </h2>
+
+
+            <p>
+                {{ game.review }}
+            </p>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+{% endblock %}

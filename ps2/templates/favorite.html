@@ -1,0 +1,462 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<style>
+
+    .games-page {
+        max-width: 1200px;
+
+        margin: 0 auto;
+
+        padding: 50px 20px;
+    }
+
+
+    .page-title {
+        text-align: center;
+
+        margin-bottom: 10px;
+
+        font-size: 36px;
+
+        text-transform: uppercase;
+
+        letter-spacing: 3px;
+
+        text-shadow:
+            0 0 10px rgba(0, 102, 204, 0.8);
+    }
+
+
+    .page-subtitle {
+        text-align: center;
+
+        color: #888;
+
+        margin-bottom: 40px;
+
+        font-size: 15px;
+    }
+
+
+    /* =========================
+       SEARCH
+    ========================= */
+
+    .search-container {
+        max-width: 600px;
+
+        margin: 0 auto 45px;
+    }
+
+
+    .search-form {
+        display: flex;
+
+        gap: 10px;
+    }
+
+
+    .search-form input {
+        flex: 1;
+
+        padding: 15px 18px;
+
+        background-color: #151515;
+
+        border: 1px solid #333;
+
+        border-radius: 5px;
+
+        color: #ffffff;
+
+        font-size: 15px;
+
+        outline: none;
+
+        transition: border-color 0.2s ease;
+    }
+
+
+    .search-form input::placeholder {
+        color: #777;
+    }
+
+
+    .search-form input:focus {
+        border-color: #0066cc;
+
+        box-shadow:
+            0 0 8px rgba(0, 102, 204, 0.4);
+    }
+
+
+    .search-form button {
+        padding: 0 25px;
+
+        background-color: #0066cc;
+
+        border: none;
+
+        border-radius: 5px;
+
+        color: #ffffff;
+
+        font-size: 14px;
+
+        font-weight: bold;
+
+        cursor: pointer;
+
+        text-transform: uppercase;
+
+        transition: background-color 0.2s ease;
+    }
+
+
+    .search-form button:hover {
+        background-color: #0088ff;
+    }
+
+
+    /* =========================
+       GAMES GRID
+    ========================= */
+
+    .games-container {
+        display: grid;
+
+        grid-template-columns:
+            repeat(
+                auto-fill,
+                minmax(270px, 1fr)
+            );
+
+        gap: 30px;
+    }
+
+
+    /* =========================
+       GAME CARD
+    ========================= */
+
+    .Game {
+        background-color: #111;
+
+        border: 1px solid #292929;
+
+        border-radius: 6px;
+
+        overflow: hidden;
+
+        box-shadow:
+            0 8px 25px rgba(0, 0, 0, 0.5);
+
+        transition:
+            transform 0.25s ease,
+            border-color 0.25s ease,
+            box-shadow 0.25s ease;
+    }
+
+
+    .Game:hover {
+        transform: translateY(-7px);
+
+        border-color: #0066cc;
+
+        box-shadow:
+            0 12px 30px rgba(0, 102, 204, 0.25);
+    }
+
+
+    /* =========================
+       GAME IMAGE
+    ========================= */
+
+    .Game img {
+        width: 100%;
+
+        aspect-ratio: 2 / 3;
+
+        object-fit: contain;
+
+        display: block;
+
+        background-color: #050505;
+
+        border-bottom: 2px solid #0066cc;
+    }
+
+
+    /* =========================
+       GAME CONTENT
+    ========================= */
+
+    .Game-content {
+        padding: 20px;
+    }
+
+
+    .Game h2 {
+        margin-bottom: 15px;
+
+        color: #ffffff;
+
+        font-size: 21px;
+
+        line-height: 1.3;
+    }
+
+
+    .Game p {
+        color: #aaa;
+
+        font-size: 14px;
+
+        line-height: 1.6;
+
+        margin-bottom: 10px;
+    }
+
+
+    .Game strong {
+        color: #ddd;
+    }
+
+
+    /* =========================
+       RATING
+    ========================= */
+
+    .rating {
+        color: #ffd700 !important;
+
+        font-weight: bold;
+    }
+
+
+    /* =========================
+       FAVORITE
+    ========================= */
+
+    .favorite {
+        color: #ff4d6d !important;
+
+        font-weight: bold;
+    }
+
+
+    /* =========================
+       REVIEW
+    ========================= */
+
+    .review {
+        margin-top: 18px;
+
+        padding-top: 18px;
+
+        border-top: 1px solid #292929;
+    }
+
+
+    .review strong {
+        display: block;
+
+        margin-bottom: 8px;
+
+        color: #0066cc;
+    }
+
+
+    /* =========================
+       EMPTY
+    ========================= */
+
+    .empty-message {
+        grid-column: 1 / -1;
+
+        padding: 60px 20px;
+
+        text-align: center;
+
+        background-color: #111;
+
+        border: 1px solid #292929;
+
+        border-radius: 6px;
+    }
+
+
+    .empty-message h2 {
+        margin-bottom: 10px;
+    }
+
+
+    .empty-message p {
+        color: #777;
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+        .games-page {
+            padding: 35px 15px;
+        }
+
+
+        .page-title {
+            font-size: 27px;
+        }
+
+
+        .search-form {
+            flex-direction: column;
+        }
+
+
+        .search-form button {
+            padding: 14px;
+        }
+
+
+        .games-container {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+</style>
+
+
+<div class="games-page">
+
+
+    <h1 class="page-title">
+        🎮 Minha Biblioteca
+    </h1>
+
+
+    <p class="page-subtitle">
+        Uma coleção dos jogos de PlayStation 2 que fizeram história.
+    </p>
+
+
+    <div class="search-container">
+
+        <form
+            method="GET"
+            action=""
+            class="search-form"
+        >
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Pesquisar jogo..."
+                value="{{ request.GET.search }}"
+            >
+
+            <button type="submit">
+                Pesquisar
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="games-container">
+
+        {% for game in favorites %}
+            <a href="{% url 'game_detail' game.id %}">
+                <div class="Game">
+
+                    <img
+                        src="{{ game.image.url }}"
+                        alt="Capa do jogo {{ game.title }}"
+                    >
+
+
+                    <div class="Game-content">
+
+                        <h2>
+                            {{ game.title }}
+                        </h2>
+
+
+                        <p>
+                            <strong>
+                                Ano:
+                            </strong>
+
+                            {{ game.release_year }}
+                        </p>
+
+
+                        <p class="rating">
+                            ⭐ Avaliação:
+                            {{ game.rating }}/5
+                        </p>
+
+
+                        <p class="favorite">
+
+                            {% if game.favorite %}
+
+                                ❤️ Favorito
+
+                            {% else %}
+
+                                ☆ Não é favorito
+
+                            {% endif %}
+
+                        </p>
+
+
+                        <div class="review">
+
+                            <strong>
+                                Review
+                            </strong>
+
+                            <p>
+                                {{ game.review }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </a>
+
+
+        {% empty %}
+
+            <div class="empty-message">
+
+                <h2>
+                    Nenhum jogo encontrado 😕
+                </h2>
+
+                <p>
+                    Não encontramos nenhum jogo com esse nome.
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+{% endblock %}
