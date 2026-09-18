@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data"> 
+        {% csrf_token %} <!-- proteção contra alguns ataques hackers -->
+
+        <table>
+            {{ form.as_table }} <!-- variavel nativa do CreateView -->
+        </table>
+        
+        <input type="submit" value="Cadastrar" class="btn btn-primary">
+
+    </form>
+{% endblock %}
+
+<!-- usa-se 'form' porque é contexto nativo da Class CreateView -->

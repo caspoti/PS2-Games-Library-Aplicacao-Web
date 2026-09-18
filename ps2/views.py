@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from ps2.models import Game
+from django.views.generic import CreateView
+from ps2.forms import GameModelForm
 
 # Create your views here.
 def games_view(request):
@@ -33,3 +35,14 @@ def game_details_view(request, game_id):
         'game.html',
         {'game':game}
     )
+
+
+# Class Create based view
+class NewGameCreateView(CreateView):
+
+    model = Game
+    form_class = GameModelForm
+    template_name = 'new_game.html'
+    success_url = '/games/'
+
+    # 'form' é a variavel nativa do CreateView, usa-se como contexto dentro do new_game.html

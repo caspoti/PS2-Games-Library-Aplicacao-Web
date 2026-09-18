@@ -18,11 +18,12 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from ps2.views import games_view, favorite_view, game_details_view
+from ps2.views import games_view, favorite_view, game_details_view, NewGameCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('games/', games_view, name='games_list'),
     path('favorite/',favorite_view, name='favorite_list'),
-    path('<int:game_id>/', game_details_view, name= 'game_detail')
+    path('<int:game_id>/', game_details_view, name= 'game_detail'),
+    path('new_game/', NewGameCreateView.as_view(), name= 'new_game'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
