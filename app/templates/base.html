@@ -79,7 +79,7 @@
             <!-- MENU -->
 
             <ul>
-
+            
                 <li class="active">
 
                     <a
@@ -97,12 +97,31 @@
                         ⭐ Favoritos
                     </a>
                 </li>
-                
-                <li class="active">
-                    <a href="{% url 'new_game' %}">
-                        👾 Adicionar jogo
-                    </a>
-                </li>
+                {% if user.is_authenticated %}
+                    
+                    <li class="active">
+                        <a href="{% url 'new_game' %}">
+                            👾 Adicionar jogo
+                        </a>
+                    </li>
+
+                    <li class="active">
+                        <a href="{% url 'logout' %}">
+                            ➜] Sair
+                        </a>
+                    </li>
+
+                    <li class="active">
+                        Olá, {{ user.username }}!
+                    </li>
+                    
+                {% else %}
+                    <li class="active">
+                        <a href="{% url 'login' %}">
+                            👤 Entrar
+                        </a>
+                    </li>
+                {% endif %}
 
             </ul>
 

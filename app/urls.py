@@ -19,6 +19,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from ps2.views import games_view, favorite_view, game_details_view, NewGameCreateView
+from accounts.views import register_view, login_view, logout_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +27,7 @@ urlpatterns = [
     path('favorite/',favorite_view, name='favorite_list'),
     path('<int:game_id>/', game_details_view, name= 'game_detail'),
     path('new_game/', NewGameCreateView.as_view(), name= 'new_game'),
+    path('register/', register_view, name='register'),
+    path('login/', login_view, name='login'),
+    path('logout/', logout_view,name='logout')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
